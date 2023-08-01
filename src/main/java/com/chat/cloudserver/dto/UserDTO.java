@@ -1,4 +1,4 @@
-package com.chat.cloudserver.module.dto;
+package com.chat.cloudserver.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +12,6 @@ public class UserDTO {
     private String password;
     private String name;
     private String email;
+    private String imageURL;
 
 }
