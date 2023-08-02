@@ -3,20 +3,20 @@ package com.chat.cloudserver.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.security.Timestamp;
+
 @Data
 @Builder
-public class UserDTO {
-
-    private int no;
+public class MessageDTO {
 
     private String id;
 
-    private String password;
+    private String senderID;
 
-    private String name;
-
-    private String email;
+    private String text;
 
     private String imageURL;
+
+    private String createDate;
 
 }
