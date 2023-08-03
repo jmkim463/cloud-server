@@ -1,6 +1,6 @@
-package com.chat.cloudserver.service;
+package com.chat.cloudserver.api.service;
 
-import com.chat.cloudserver.dto.UserDTO;
+import com.chat.cloudserver.api.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 @Service

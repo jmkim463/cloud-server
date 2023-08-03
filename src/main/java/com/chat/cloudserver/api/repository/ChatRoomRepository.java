@@ -1,12 +1,9 @@
-package com.chat.cloudserver;
+package com.chat.cloudserver.api.repository;
 
-import com.chat.cloudserver.dto.ChatRoomDTO;
+import com.chat.cloudserver.api.dto.ChatRoomDTO;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

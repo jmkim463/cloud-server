@@ -1,10 +1,9 @@
-package com.chat.cloudserver.controller;
+package com.chat.cloudserver.api.controller;
 
-import com.chat.cloudserver.dto.UserDTO;
-import com.chat.cloudserver.service.UserService;
+import com.chat.cloudserver.api.dto.UserDTO;
+import com.chat.cloudserver.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +24,8 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
 
-    @GetMapping("/check/{id}")
-    public ResponseEntity<?> isHaveSameID(@PathVariable String id) {
+    @GetMapping("/check")
+    public ResponseEntity<?> isHaveSameID(@RequestParam String id) {
         boolean isHaveSameID = userService.isHaveSameID(id);
 
         return ResponseEntity.ok(isHaveSameID);
