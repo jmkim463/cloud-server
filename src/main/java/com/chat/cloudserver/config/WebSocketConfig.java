@@ -1,11 +1,7 @@
 package com.chat.cloudserver.config;
 
-import com.chat.cloudserver.handler.WebSocketHandler;
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
+import com.chat.cloudserver.config.handler.WebSocketHandler;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.config.ChannelRegistration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
