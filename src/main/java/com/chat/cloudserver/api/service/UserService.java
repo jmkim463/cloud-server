@@ -12,7 +12,7 @@ public class UserService {
 
     public UserDTO getUserDTO(int no) {
         UserDTO userDTO = UserDTO.builder()
-                .no(1)
+                .no("1")
                 .id("test")
                 .password("asdf")
                 .name("홍길동")
@@ -30,4 +30,6 @@ public class UserService {
     public void createUserAccount(UserDTO userDTO) {
 
     }
+
+    public UserDTO findUserByNo(String userNo)
 }

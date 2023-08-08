@@ -1,20 +1,18 @@
 package com.chat.cloudserver.api.dto;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 @Data
 @Builder
-public class UserDTO {
+public class ParticipantDTO {
 
     private String no;
-    private String name;
-    private String id;
-    private String password;
-    private String email;
-    private String imageURL;
+    private String userNo;
+    private String chatRoomNo;
+    private String joinAt;
 
 }

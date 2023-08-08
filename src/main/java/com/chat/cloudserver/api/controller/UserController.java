@@ -5,6 +5,7 @@ import com.chat.cloudserver.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -29,6 +30,12 @@ public class UserController {
         boolean isHaveSameID = userService.isHaveSameID(id);
 
         return ResponseEntity.ok(isHaveSameID);
+    }
+
+    @GetMapping("/findUserByNo/{userNo}")
+    public ResponseEntity<?> findUserByNo(@PathVariable String userNo) {
+        UserDTO userDTO = userService.findUserByNo(userNo);
+        return ResponseEntity.ok(userDTO);
     }
 
     @PostMapping("/account")

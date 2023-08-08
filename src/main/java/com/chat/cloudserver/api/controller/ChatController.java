@@ -18,7 +18,7 @@ public class ChatController {
         List<ChatRoomDTO> list = new ArrayList<>();
 
         for(int i = 1; i <= 3; i++) {
-            list.add(ChatRoomDTO.builder().id(String.format("ROOM-%05d", i)).build());
+            list.add(ChatRoomDTO.builder().no(String.format("ROOM-%05d", i)).build());
         }
 
         return list;
