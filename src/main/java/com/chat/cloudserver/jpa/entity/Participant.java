@@ -8,7 +8,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @Entity(name = "participant")
-public class ParticipantEntity {
+@Table(name = "participant")
+public class Participant {
 
     @Id
     @Column(length = 20)
@@ -24,7 +25,7 @@ public class ParticipantEntity {
     @Column(columnDefinition = "DATETIME")
     private String joinAt;
 
-    public ParticipantEntity(String no, String userNo, String chatRoomNo, String joinAt) {
+    public Participant(String no, String userNo, String chatRoomNo, String joinAt) {
         this.no = no;
         this.userNo = userNo;
         this.chatRoomNo = chatRoomNo;

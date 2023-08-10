@@ -4,9 +4,12 @@ import com.chat.cloudserver.api.dto.UserDTO;
 import com.chat.cloudserver.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -14,36 +17,27 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserService service;
 
     @GetMapping("/login")
     public ResponseEntity<?> login(@RequestParam String id, @RequestParam String password) {
-        Integer no = userService.checkLogin(id, password);
+        String userNo = service.retrieveUserNoByIdAndPassword(id, password);
 
-        UserDTO userDTO = userService.getUserDTO(no);
+        UserDTO userDTO = service.
 
         return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("/check")
     public ResponseEntity<?> isHaveSameID(@RequestParam String id) {
-        boolean isHaveSameID = userService.isHaveSameID(id);
+        boolean isHaveSameID = service.isHaveSameID(id);
 
         return ResponseEntity.ok(isHaveSameID);
     }
 
-    @GetMapping("/findUserByNo/{userNo}")
-    public ResponseEntity<?> findUserByNo(@PathVariable String userNo) {
-        UserDTO userDTO = userService.findUserByNo(userNo);
-        return ResponseEntity.ok(userDTO);
-    }
-
     @PostMapping("/account")
     public ResponseEntity<?> account(@RequestBody UserDTO userDTO) {
-        userService.createUserAccount(userDTO);
-
-        log.info("회원가입 성공");
-        log.info("no = {}, name = {}", userDTO.getNo(), userDTO.getName());
+        service.createUserAccount(userDTO);
 
         return ResponseEntity.ok("회원가입 성공");
     }

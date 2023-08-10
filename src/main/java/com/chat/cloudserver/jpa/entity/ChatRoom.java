@@ -8,7 +8,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @Entity(name = "chatroom")
-public class ChatRoomEntity {
+@Table(name = "chatroom")
+public class ChatRoom {
 
     @Id
     @Column(length = 20)
@@ -18,7 +19,7 @@ public class ChatRoomEntity {
     @Column(columnDefinition = "DATETIME")
     private String createAt;
 
-    public ChatRoomEntity(String no, String createAt) {
+    public ChatRoom(String no, String createAt) {
         this.no = no;
         this.createAt = createAt;
     }

@@ -1,11 +1,10 @@
 package com.chat.cloudserver.api.dto;
 
 import jakarta.persistence.Entity;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@ToString
 @Builder
 public class ChatRoomDTO {
 

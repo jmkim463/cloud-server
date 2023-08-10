@@ -8,7 +8,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @Entity(name = "user")
-public class UserEntity {
+@Table(name = "user")
+public class User {
 
     @Id
     @Column(length = 20)
@@ -29,7 +30,7 @@ public class UserEntity {
 
     private String imageFilePath;
 
-    public UserEntity(String no, String name, String id, String password, String email, String imageFilePath) {
+    public User(String no, String name, String id, String password, String email, String imageFilePath) {
         this.no = no;
         this.name = name;
         this.id = id;

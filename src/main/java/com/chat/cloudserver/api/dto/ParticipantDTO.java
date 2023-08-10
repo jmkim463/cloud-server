@@ -1,12 +1,11 @@
 package com.chat.cloudserver.api.dto;
 
 import jakarta.persistence.Entity;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
-@Data
+@Getter
+@ToString
 @Builder
 public class ParticipantDTO {
 

@@ -8,7 +8,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @Entity(name = "message")
-public class MessageEntity {
+@Table(name = "message")
+public class Message {
 
     @Id
     @Column(length = 20)
@@ -27,7 +28,7 @@ public class MessageEntity {
     @Column(columnDefinition = "DATETIME")
     private String sendAt;
 
-    public MessageEntity(String no, String chatRoomNo, String senderNo, String content, String sendAt) {
+    public Message(String no, String chatRoomNo, String senderNo, String content, String sendAt) {
         this.no = no;
         this.chatRoomNo = chatRoomNo;
         this.senderNo = senderNo;
