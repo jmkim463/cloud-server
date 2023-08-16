@@ -23,7 +23,7 @@ public class UserController {
     public ResponseEntity<?> login(@RequestParam String id, @RequestParam String password) {
         String userNo = service.retrieveUserNoByIdAndPassword(id, password);
 
-        UserDTO userDTO = service.
+        UserDTO userDTO = service.findUserByNo(userNo);
 
         return ResponseEntity.ok(userDTO);
     }

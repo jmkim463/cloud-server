@@ -3,8 +3,7 @@ package com.chat.cloudserver.api.dto;
 import jakarta.persistence.Entity;
 import lombok.*;
 
-@Getter
-@ToString
+@Data
 @Builder
 public class ChatRoomDTO {
 

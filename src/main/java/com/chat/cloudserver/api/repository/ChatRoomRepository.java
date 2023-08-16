@@ -1,6 +1,6 @@
-package com.chat.cloudserver.jpa.repository;
+package com.chat.cloudserver.api.repository;
 
-import com.chat.cloudserver.jpa.entity.ChatRoom;
+import com.chat.cloudserver.api.entity.ChatRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, String> {

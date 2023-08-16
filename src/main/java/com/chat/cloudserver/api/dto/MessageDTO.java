@@ -6,8 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
-@Getter
-@ToString
+@Data
 @Builder
 public class MessageDTO {
 

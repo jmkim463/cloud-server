@@ -1,6 +1,6 @@
-package com.chat.cloudserver.jpa.repository;
+package com.chat.cloudserver.api.repository;
 
-import com.chat.cloudserver.jpa.entity.User;
+import com.chat.cloudserver.api.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,8 +1,9 @@
 package com.chat.cloudserver.api.service;
 
 import com.chat.cloudserver.api.dto.UserDTO;
-import com.chat.cloudserver.jpa.entity.User;
-import com.chat.cloudserver.jpa.repository.UserRepository;
+import com.chat.cloudserver.api.entity.User;
+import com.chat.cloudserver.api.mapper.UserMapper;
+import com.chat.cloudserver.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,28 +32,10 @@ public class UserService {
         if(optional.isPresent()) {
             User entity = optional.get();
 
-
+            return UserMapper.INSTANCE.entityToDTO(entity);
         } else {
             return null;
         }
-    }
-
-    public UserDTO getUserDTO(int no) {
-
-
-        return userDTO;
-    }
-
-    public UserDTO test() {
-        User entity = repository.findById("USER-000001").get();
-
-        UserDTO userDTO = UserDTO.builder()
-                .no(entity.getNo())
-                .password(entity.getPassword())
-                .id(entity.getId())
-                .name(entity.getName())
-                .email(entity.getEmail()).build();
-        return userDTO ;
     }
 
     public boolean isHaveSameID(String id) {

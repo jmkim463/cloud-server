@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
-@Getter
-@ToString
+@Data
 @Builder
 public class ParticipantDTO {
 

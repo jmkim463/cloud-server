@@ -1,14 +1,10 @@
-package com.chat.cloudserver.jpa.entity;
+package com.chat.cloudserver.api.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
-@ToString
-@Builder
-@NoArgsConstructor
 @Entity(name = "message")
-@Table(name = "message")
 public class Message {
 
     @Id
@@ -27,13 +23,5 @@ public class Message {
 
     @Column(columnDefinition = "DATETIME")
     private String sendAt;
-
-    public Message(String no, String chatRoomNo, String senderNo, String content, String sendAt) {
-        this.no = no;
-        this.chatRoomNo = chatRoomNo;
-        this.senderNo = senderNo;
-        this.content = content;
-        this.sendAt = sendAt;
-    }
 
 }

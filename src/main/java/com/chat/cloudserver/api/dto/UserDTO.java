@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
 
-@Getter
-@ToString
+@Data
 @Builder
 public class UserDTO {
 
