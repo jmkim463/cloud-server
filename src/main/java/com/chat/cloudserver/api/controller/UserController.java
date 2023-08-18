@@ -21,14 +21,14 @@ public class UserController {
 
     @GetMapping("/login")
     public ResponseEntity<?> login(@RequestParam String id, @RequestParam String password) {
-        String userNo = service.retrieveUserNoByIdAndPassword(id, password);
+        Long no = service.retrieveNoByIdAndPassword(id, password);
 
-        UserDTO userDTO = service.findUserByNo(userNo);
+        UserDTO userDTO = service.findUserByNo(no);
 
         return ResponseEntity.ok(userDTO);
     }
 
-    @GetMapping("/check")
+    @GetMapping("/check/id")
     public ResponseEntity<?> isHaveSameID(@RequestParam String id) {
         boolean isHaveSameID = service.isHaveSameID(id);
 
@@ -37,8 +37,8 @@ public class UserController {
 
     @PostMapping("/account")
     public ResponseEntity<?> account(@RequestBody UserDTO userDTO) {
-        service.createUserAccount(userDTO);
+        Long no = service.createUserAccount(userDTO);
 
-        return ResponseEntity.ok("회원가입 성공");
+        return ResponseEntity.ok(no);
     }
 }

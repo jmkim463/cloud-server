@@ -2,7 +2,6 @@ package com.chat.cloudserver.api.service;
 
 import com.chat.cloudserver.api.dto.UserDTO;
 import com.chat.cloudserver.api.entity.User;
-import com.chat.cloudserver.api.mapper.UserMapper;
 import com.chat.cloudserver.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,35 +14,53 @@ public class UserService {
 
     private final UserRepository repository;
 
-    public String retrieveUserNoByIdAndPassword(String id, String password) {
-        Optional<String> optional = repository.findUserNoByIdAndPassword(id, password);
+    public Long retrieveNoByIdAndPassword(String id, String password) {
+        Optional<Long> optional = repository.findNoByIdAndPassword(id, password);
 
         if(optional.isPresent()) {
-            String userNo = optional.get();
-            return userNo;
+            Long no = optional.get();
+
+            return no;
         } else {
             return null;
         }
     }
 
-    public UserDTO findUserByNo(String userNo) {
-        Optional<User> optional = repository.findById(userNo);
+    public UserDTO findUserByNo(Long no) {
+        Optional<User> optional = repository.findById(no);
 
         if(optional.isPresent()) {
             User entity = optional.get();
 
-            return UserMapper.INSTANCE.entityToDTO(entity);
+            UserDTO user = UserDTO.builder()
+                    .no(entity.getNo())
+                    .id(entity.getId())
+                    .password(entity.getPassword())
+                    .name(entity.getName())
+                    .email(entity.getEmail()).build();
+
+            return user;
         } else {
             return null;
         }
     }
 
     public boolean isHaveSameID(String id) {
-        return true;
+        int count = repository.countBySameID(id).get();
+
+        return count == 0;
     }
 
-    public void createUserAccount(UserDTO userDTO) {
+    public Long createUserAccount(UserDTO userDTO) {
+        User entity = User.builder()
+                .id(userDTO.getId())
+                .password(userDTO.getPassword())
+                .name(userDTO.getName())
+                .email(userDTO.getEmail()).build();
 
+        entity = repository.save(entity);
+
+        return entity.getNo();
     }
 
 }
