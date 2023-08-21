@@ -1,59 +1,73 @@
 package com.chat.cloudserver.config.handler;
 
+import com.chat.cloudserver.api.dto.MessageDTO;
+import com.chat.cloudserver.api.dto.UserDTO;
+import com.chat.cloudserver.api.entity.User;
+import com.chat.cloudserver.api.repository.UserRepository;
 import com.chat.cloudserver.model.MessageType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class WebSocketHandler extends TextWebSocketHandler {
 
-    Map<String, WebSocketSession> userSessions = new HashMap<>();
+    private final Map<Long, WebSocketSession> userSessions;
+
+    private final UserRepository userRepository;
+    private final ObjectMapper mapper;
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        System.out.println(message.getPayload());
 
         JSONObject json = (JSONObject) new JSONParser().parse(message.getPayload());
 
         MessageType type = MessageType.valueOf((String) json.get("type"));
+        Long senderNo = (Long) json.get("senderNo");
 
         switch (type) {
-            case ENTER -> enter(session, json);
-            case MESSAGE -> sendMessage(session, json);
-            case EXIT -> exit(session, json);
-        }
-    }
+            case ENTER -> enter(senderNo, session);
+            case EXIT -> exit(senderNo);
+            case MESSAGE -> {
 
-    private void enter(WebSocketSession session, JSONObject json) {
-        String userNo = (String) json.get("userNo");
+                MessageDTO messageDTO = mapper.readValue(json.get("messageDTO").toString(), MessageDTO.class);
 
-        userSessions.put(userNo, session);
-    }
-
-    private void sendMessage(WebSocketSession session, JSONObject json) throws IOException {
-        String userNo = (String) json.get("userNo");
-        String message = (String) json.get("message");
-
-        log.info("USER = {} SEND MESSAGE = {}", userNo, message);
-        for(String key : userSessions.keySet()) {
-            if (!userNo.equals(key)) {
-                userSessions.get(key).sendMessage(new TextMessage(message));
+                sendMessage(messageDTO);
             }
         }
     }
 
-    private void exit(WebSocketSession session, JSONObject json) {
-        String userNo = (String) json.get("userNo");
+    public void enter(Long no, WebSocketSession session) {
+        userSessions.put(no, session);
+    }
 
-        log.info("USER = {} EXIT", userNo);
+    public void exit(Long no) {
+        userSessions.remove(no);
+    }
 
-        userSessions.remove(userNo);
+    public void sendMessage(MessageDTO messageDTO) throws IOException {
+        Long sender = messageDTO.getSenderDTO().getNo();
+
+        TextMessage message = new TextMessage(mapper.writeValueAsString(messageDTO));
+
+        System.out.println(message);
+
+        for(Long no : userSessions.keySet()) {
+            if (sender != no) {
+                userSessions.get(no).sendMessage(message);
+            }
+        }
+
     }
 }
