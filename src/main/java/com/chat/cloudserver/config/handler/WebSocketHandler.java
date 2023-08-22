@@ -2,8 +2,7 @@ package com.chat.cloudserver.config.handler;
 
 import com.chat.cloudserver.api.dto.MessageDTO;
 import com.chat.cloudserver.api.dto.UserDTO;
-import com.chat.cloudserver.api.entity.User;
-import com.chat.cloudserver.api.repository.UserRepository;
+import com.chat.cloudserver.api.mapper.MessageMapper;
 import com.chat.cloudserver.model.MessageType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +15,10 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 @Slf4j
@@ -25,12 +28,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     private final Map<Long, WebSocketSession> userSessions;
 
-    private final UserRepository userRepository;
+    private final MessageMapper messageMapper;
+
     private final ObjectMapper mapper;
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
         JSONObject json = (JSONObject) new JSONParser().parse(message.getPayload());
 
         MessageType type = MessageType.valueOf((String) json.get("type"));
@@ -40,7 +43,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
             case ENTER -> enter(senderNo, session);
             case EXIT -> exit(senderNo);
             case MESSAGE -> {
-
                 MessageDTO messageDTO = mapper.readValue(json.get("messageDTO").toString(), MessageDTO.class);
 
                 sendMessage(messageDTO);
@@ -57,15 +59,16 @@ public class WebSocketHandler extends TextWebSocketHandler {
     }
 
     public void sendMessage(MessageDTO messageDTO) throws IOException {
-        Long sender = messageDTO.getSenderDTO().getNo();
+        messageDTO.setSendAt(MessageDTO.getNowDateTime());
+        Long no = messageMapper.save(messageDTO);
+        messageDTO.setNo(no);
 
         TextMessage message = new TextMessage(mapper.writeValueAsString(messageDTO));
 
-        System.out.println(message);
-
-        for(Long no : userSessions.keySet()) {
-            if (sender != no) {
-                userSessions.get(no).sendMessage(message);
+        Long senderNo = messageDTO.getSenderNo();
+        for(Long userNo : userSessions.keySet()) {
+            if (senderNo != userNo) {
+                userSessions.get(userNo).sendMessage(message);
             }
         }
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MessageController {
 
-    @SubscribeMapping("/group/chat/{roomID}")
+    /*@SubscribeMapping("/group/chat/{roomID}")
     public void subscribeGroupChat(@DestinationVariable String roomID) {
         log.info("subscribe Group Chat = {}", roomID);
     }
@@ -39,6 +39,6 @@ public class MessageController {
     public String greeting(String text) {
         System.out.println(text);
         return text;
-    }
+    }*/
 
 }

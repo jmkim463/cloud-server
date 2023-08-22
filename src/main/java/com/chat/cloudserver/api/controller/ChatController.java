@@ -1,27 +1,32 @@
 package com.chat.cloudserver.api.controller;
 
 import com.chat.cloudserver.api.dto.ChatRoomDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.chat.cloudserver.api.service.ChatRoomService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/chat")
+@RequiredArgsConstructor
 public class ChatController {
 
-    @GetMapping("/roomList")
-    public List<ChatRoomDTO> getUserRoomListAll(@RequestParam String userNo) {
-        List<ChatRoomDTO> list = new ArrayList<>();
+    private final ChatRoomService chatRoomService;
 
-        for(int i = 1; i <= 3; i++) {
-            list.add(ChatRoomDTO.builder().no(String.format("ROOM-%05d", i)).build());
+    @GetMapping("/user/chatroom")
+    public ResponseEntity<?> selectUserChatRoomList(@RequestParam("userNo") Long userNo) {
+        List<ChatRoomDTO> chatRoomDTOList = chatRoomService.selectUserChatRoom(userNo);
+
+        if(chatRoomDTOList == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         }
 
-        return list;
+        return ResponseEntity.ok(chatRoomDTOList);
     }
-
 }
