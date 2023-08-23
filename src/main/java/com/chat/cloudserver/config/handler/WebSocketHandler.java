@@ -3,6 +3,8 @@ package com.chat.cloudserver.config.handler;
 import com.chat.cloudserver.api.dto.MessageDTO;
 import com.chat.cloudserver.api.dto.UserDTO;
 import com.chat.cloudserver.api.mapper.MessageMapper;
+import com.chat.cloudserver.api.service.MessageService;
+import com.chat.cloudserver.api.service.ParticipantService;
 import com.chat.cloudserver.model.MessageType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,16 +21,19 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class WebSocketHandler extends TextWebSocketHandler {
 
-    private final Map<Long, WebSocketSession> userSessions;
+    private final Map<Long, WebSocketSession> userSessions = new ConcurrentHashMap<>();
 
-    private final MessageMapper messageMapper;
+    private final MessageService messageService;
+    private final ParticipantService participantService;
 
     private final ObjectMapper mapper;
 
@@ -59,18 +64,21 @@ public class WebSocketHandler extends TextWebSocketHandler {
     }
 
     public void sendMessage(MessageDTO messageDTO) throws IOException {
-        messageDTO.setSendAt(MessageDTO.getNowDateTime());
-        Long no = messageMapper.save(messageDTO);
-        messageDTO.setNo(no);
+        messageDTO = messageService.save(messageDTO);
+
+        Long senderNo = messageDTO.getSenderNo();
+        List<Long> participantList = participantService.getOtherParticipantsInChatRoom(senderNo, messageDTO.getChatroomNo());
 
         TextMessage message = new TextMessage(mapper.writeValueAsString(messageDTO));
 
-        Long senderNo = messageDTO.getSenderNo();
-        for(Long userNo : userSessions.keySet()) {
-            if (senderNo != userNo) {
-                userSessions.get(userNo).sendMessage(message);
+        for(Long no : participantList) {
+            WebSocketSession session = userSessions.get(no);
+
+            if(session != null) {
+                session.sendMessage(message);
             }
         }
 
     }
+
 }

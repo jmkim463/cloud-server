@@ -1,14 +1,16 @@
 package com.chat.cloudserver.api.controller;
 
 import com.chat.cloudserver.api.dto.ChatRoomDTO;
+import com.chat.cloudserver.api.dto.MessageDTO;
 import com.chat.cloudserver.api.service.ChatRoomService;
+import com.chat.cloudserver.api.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -19,8 +21,10 @@ public class ChatController {
 
     private final ChatRoomService chatRoomService;
 
+    private final MessageService messageService;
+
     @GetMapping("/user/chatroom")
-    public ResponseEntity<?> selectUserChatRoomList(@RequestParam("userNo") Long userNo) {
+    public ResponseEntity<?> getUserChatRoomList(@RequestParam("userNo") Long userNo) {
         List<ChatRoomDTO> chatRoomDTOList = chatRoomService.selectUserChatRoom(userNo);
 
         if(chatRoomDTOList == null) {
@@ -28,5 +32,13 @@ public class ChatController {
         }
 
         return ResponseEntity.ok(chatRoomDTOList);
+    }
+
+    @GetMapping("/chatroom/massage")
+    public ResponseEntity<?> getMessageOfChatRoomList(@RequestParam("chatroomNo") Long chatroomNo) {
+        List<MessageDTO> messageDTOList = messageService.getChatroomOfMessageList(chatroomNo);
+
+
+        return ResponseEntity.ok(messageDTOList);
     }
 }
