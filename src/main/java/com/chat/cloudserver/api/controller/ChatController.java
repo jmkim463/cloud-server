@@ -2,6 +2,7 @@ package com.chat.cloudserver.api.controller;
 
 import com.chat.cloudserver.api.dto.ChatRoomDTO;
 import com.chat.cloudserver.api.dto.MessageDTO;
+import com.chat.cloudserver.api.dto.UserDTO;
 import com.chat.cloudserver.api.service.ChatRoomService;
 import com.chat.cloudserver.api.service.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -41,4 +42,5 @@ public class ChatController {
 
         return ResponseEntity.ok(messageDTOList);
     }
+
 }
