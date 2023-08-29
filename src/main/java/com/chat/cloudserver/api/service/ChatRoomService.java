@@ -23,4 +23,11 @@ public class ChatRoomService {
         return chatRoomDTOList;
     }
 
+    public void getPersonalChatroom(Long userNo1, Long userNo2) {
+        Long no = mapper.selectPersonalChatroom(userNo1, userNo2);
+
+        if(no == null) {
+            
+        }
+    }
 }

@@ -33,4 +33,8 @@ public class FriendService {
     public Long save(FriendDTO friendDTO) {
         return mapper.save(friendDTO);
     }
+
+    public void updateStatus(Long userNo1, Long userNo2, int status) {
+        mapper.updateStatus(userNo1, userNo2, status);
+    }
 }

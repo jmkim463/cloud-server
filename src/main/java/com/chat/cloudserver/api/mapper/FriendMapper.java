@@ -27,4 +27,8 @@ public interface FriendMapper {
     @Insert("INSERT INTO friend (user_no_1, user_no_2, status) VALUES (#{userNo1}, #{userNo2}, '1');")
     @Options(useGeneratedKeys = true, keyProperty = "no")
     Long save(FriendDTO friendDTO);
+
+    @Update("UPDATE friend SET status = #{status} WHERE (user_no_1 = #{userNo1} AND user_no_2 = #{userNo2})")
+    void updateStatus(@Param("userNo1") Long userNo1, @Param("userNo2") Long userNo2, @Param("status") int status);
+    
 }

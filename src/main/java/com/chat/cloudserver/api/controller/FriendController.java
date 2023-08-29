@@ -45,4 +45,11 @@ public class FriendController {
 
         return ResponseEntity.ok(no);
     }
+
+    @GetMapping("/update/status")
+    public ResponseEntity<?> updateStatus(@RequestParam Long userNo1, @RequestParam Long userNo2, @RequestParam int status) {
+        service.updateStatus(userNo1, userNo2, status);
+
+        return ResponseEntity.ok("status update success");
+    }
 }

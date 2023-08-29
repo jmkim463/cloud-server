@@ -22,4 +22,8 @@ public interface ChatRoomMapper {
     })
     List<ChatRoomDTO> selectUserChatRoomList(@Param("userNo") Long userNo);
 
+    @Select("SELECT c.no from chatroom c LEFT JOIN participant p ON c.no = p.chatroom_no\n" +
+            "WHERE (p.user_no = #{userNo1} or p.user_no = #{userNo2}) AND c.name IS NULL GROUP BY c.no HAVING COUNT(*) = 2")
+    Long selectPersonalChatroom(@Param("userNo1") Long userNo1, @Param("userNo2") Long userNo2);
+
 }

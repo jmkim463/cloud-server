@@ -1,10 +1,7 @@
 package com.chat.cloudserver.api.mapper;
 
 import com.chat.cloudserver.api.dto.UserDTO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
@@ -18,6 +15,12 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE no = #{no}")
     UserDTO findUserByNo(@Param("no") Long no);
 
-    @Insert("INSERT INTO VALUES")
-    Long saveUser(@Param("user") UserDTO user);
+    @Insert("INSERT INTO user (name, id, password, email) VALUES (#{name}, #{id}, #{password}, #{email});")
+    @Options(useGeneratedKeys = true, keyProperty = "no")
+    Long saveUser(UserDTO user);
+
+    @Update("UPDATE user SET name = #{name}, password = #{password}, email = #{email} WHERE (no = #{no});\n")
+    @Options(useGeneratedKeys = true, keyProperty = "no")
+    Long updateUser(UserDTO userDTO);
+
 }

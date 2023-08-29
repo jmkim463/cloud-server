@@ -43,4 +43,7 @@ public class ChatController {
         return ResponseEntity.ok(messageDTOList);
     }
 
+    @GetMapping("")
+    public ResponseEntity<?>
+
 }

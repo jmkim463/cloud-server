@@ -37,4 +37,10 @@ public class UserService {
         return no;
     }
 
+    public Long updateAccount(UserDTO userDTO) {
+        Long no = mapper.updateUser(userDTO);
+
+        return no;
+    }
+
 }
