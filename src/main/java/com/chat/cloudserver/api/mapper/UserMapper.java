@@ -17,10 +17,10 @@ public interface UserMapper {
 
     @Insert("INSERT INTO user (name, id, password, email) VALUES (#{name}, #{id}, #{password}, #{email});")
     @Options(useGeneratedKeys = true, keyProperty = "no")
-    Long saveUser(UserDTO user);
+    Long save(UserDTO user);
 
     @Update("UPDATE user SET name = #{name}, password = #{password}, email = #{email} WHERE (no = #{no});\n")
     @Options(useGeneratedKeys = true, keyProperty = "no")
-    Long updateUser(UserDTO userDTO);
+    Long update(UserDTO userDTO);
 
 }

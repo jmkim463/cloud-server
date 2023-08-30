@@ -43,7 +43,11 @@ public class ChatController {
         return ResponseEntity.ok(messageDTOList);
     }
 
-    @GetMapping("")
-    public ResponseEntity<?>
+    @GetMapping("/chatroom")
+    public ResponseEntity<?> getPrivateChatRoom(@RequestParam("userNo1") Long userNo1, @RequestParam("userNo2") Long userNo2) {
+        ChatRoomDTO chatRoomDTO = chatRoomService.getPrivateChatroom(userNo1, userNo2);
+
+        return ResponseEntity.ok(chatRoomDTO);
+    }
 
 }

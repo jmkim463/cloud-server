@@ -11,8 +11,8 @@ import lombok.*;
 public class ParticipantDTO {
 
     private String no;
-    private String userNo;
-    private String chatRoomNo;
+    private Long userNo;
+    private Long chatroomNo;
     private String joinAt;
 
 }

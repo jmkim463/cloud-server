@@ -20,8 +20,4 @@ public class MessageDTO {
     private String content;
     private String sendAt;
 
-    public static String getNowDateTime() {
-        return new SimpleDateFormat("yyyy:MM:dd HH:mm:ss").format(new Date());
-    }
-
 }

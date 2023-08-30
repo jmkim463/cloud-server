@@ -5,8 +5,6 @@ import com.chat.cloudserver.api.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -32,13 +30,13 @@ public class UserService {
     }
 
     public Long createUserAccount(UserDTO userDTO) {
-        Long no = mapper.saveUser(userDTO);
+        Long no = mapper.save(userDTO);
 
         return no;
     }
 
     public Long updateAccount(UserDTO userDTO) {
-        Long no = mapper.updateUser(userDTO);
+        Long no = mapper.update(userDTO);
 
         return no;
     }

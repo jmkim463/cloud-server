@@ -14,8 +14,6 @@ public class MessageService {
     private final MessageMapper messageMapper;
 
     public MessageDTO save(MessageDTO messageDTO) {
-        messageDTO.setSendAt(MessageDTO.getNowDateTime());
-
         Long no = messageMapper.save(messageDTO);
         messageDTO.setNo(no);
         return messageDTO;
