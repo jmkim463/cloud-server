@@ -70,11 +70,8 @@ public class UserController {
     public ResponseEntity<?> uploadImage(@RequestPart MultipartFile image, @RequestPart String id) {
         String path = imageDirectory + "/user/" + id.hashCode() + ".jpg";
 
-        log.info("test id = {}  ", id);
-
         try {
             imageService.uploadImage(image, path);
-
             return ResponseEntity.ok("User Image upload Success");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User Image Upload Failed");
