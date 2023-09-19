@@ -20,14 +20,7 @@ fi
 # 파일이 존재하는지 확인
 if [ ! -f "$DEPLOY_JAR" ]
 then
-  echo "> JAR 파일이 존재하지 않습니다. 20초 대기 후에 다시 시도합니다." >> /home/ec2-user/action/deploy.log
-  sleep 20
-fi
-
-# 파일이 존재하는지 다시 확인
-if [ ! -f "$DEPLOY_JAR" ]
-then
-  echo "> JAR 파일이 여전히 존재하지 않습니다. 종료합니다." >> /home/ec2-user/action/deploy.log
+  echo "> JAR 파일이 존재하지 않습니다. 종료합니다." >> /home/ec2-user/action/deploy.log
   exit 1
 fi
 
