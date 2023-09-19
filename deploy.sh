@@ -17,6 +17,8 @@ else
   sleep 5
 fi
 
+DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
+
 # 파일이 존재하는지 확인
 if [ ! -f "$DEPLOY_JAR" ]
 then
@@ -24,6 +26,5 @@ then
   exit 1
 fi
 
-DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
 nohup java -cp $DEPLOY_PATH -jar $DEPLOY_JAR >> /home/ec2-user/deploy.alog 2>/home/ec2-user/action/deploy_err.log &
