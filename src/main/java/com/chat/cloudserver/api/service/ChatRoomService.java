@@ -2,6 +2,7 @@ package com.chat.cloudserver.api.service;
 
 import com.chat.cloudserver.api.dto.ChatRoomDTO;
 import com.chat.cloudserver.api.dto.ParticipantDTO;
+import com.chat.cloudserver.api.dto.UserDTO;
 import com.chat.cloudserver.api.mapper.ChatRoomMapper;
 import com.chat.cloudserver.api.mapper.ParticipantMapper;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +51,20 @@ public class ChatRoomService {
         ChatRoomDTO chatRoomDTO = chatRoomMapper.findByNo(chatroomNo);
 
         return chatRoomDTO;
+    }
+
+    public void saveGroupChatRoom(ChatRoomDTO chatRoomDTO) {
+        chatRoomMapper.save(chatRoomDTO);
+
+        Long chatroomNo = chatRoomDTO.getNo();
+        log.info("create group chatroom no = {}", chatroomNo);
+
+        for(Long no : chatRoomDTO.getParticipants()) {
+            ParticipantDTO participantDTO = ParticipantDTO.builder()
+                    .chatroomNo(chatroomNo)
+                    .userNo(no).build();
+
+            participantMapper.save(participantDTO);
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.chat.cloudserver.api.mapper;
 
+import com.chat.cloudserver.api.dto.ChatRoomDTO;
 import com.chat.cloudserver.api.dto.ParticipantDTO;
+import com.chat.cloudserver.api.dto.UserDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface ParticipantMapper {
 
-    @Insert("INSERT INTO participant (user_no, chatroom_no, join_at) VALUES (#{userNo}, #{chatroomNo}, SYSDATE());")
+    @Insert("INSERT INTO participant (user_no, chatroom_no, join_at) VALUES (#{userNo}, #{chatroomNo}, NOW());")
     @Options(useGeneratedKeys = true, keyProperty = "no")
     Long save(ParticipantDTO participantDTO);
 

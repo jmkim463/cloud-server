@@ -54,6 +54,13 @@ public class ChatController {
         return ResponseEntity.ok(chatRoomDTO);
     }
 
+    @PostMapping("/chatroom")
+    public ResponseEntity<?> saveGroupChatRoom(@RequestBody ChatRoomDTO chatRoomDTO) {
+        chatRoomService.saveGroupChatRoom(chatRoomDTO);
+
+        return ResponseEntity.ok("save chatroom complete");
+    }
+
     @GetMapping("/massage")
     public ResponseEntity<?> getMessageOfChatRoomList(@RequestParam("chatroomNo") Long chatroomNo) {
         List<MessageDTO> messageDTOList = messageService.getChatroomOfMessageList(chatroomNo);
@@ -90,4 +97,5 @@ public class ChatController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Image Upload Failed");
         }
     }
+
 }
