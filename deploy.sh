@@ -27,4 +27,4 @@ then
 fi
 
 echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
-nohup java -cp $DEPLOY_PATH -jar $DEPLOY_JAR >> /home/ec2-user/deploy.alog 2>/home/ec2-user/action/deploy_err.log &
+nohup java -cp $DEPLOY_PATH -jar $DEPLOY_JAR >> /home/ec2-user/action/deploy.log 2>/home/ec2-user/action/deploy_err.log &
